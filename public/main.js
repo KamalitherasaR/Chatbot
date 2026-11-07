@@ -17,16 +17,12 @@ const sidebarOverlay = document.getElementById("sidebar-overlay");
 const sidebar = document.querySelector(".sidebar");
 
 const STORAGE_KEY = "qwenConversations";
-const DEFAULT_MODEL = "gpt-oss:20b-cloud";
+const DEFAULT_MODEL = "gpt-oss:20b";
 
 let conversations = loadConversations();
 let activeChatId = conversations[0]?.id || null;
 let isStreaming = false;
 let abortController = null;
-
-// =====================================
-// LOAD CONVERSATIONS
-// =====================================
 
 function loadConversations() {
   try {
@@ -55,19 +51,11 @@ function loadConversations() {
   return [];
 }
 
-// =====================================
-// GET ACTIVE CHAT
-// =====================================
-
 function getActiveConversation() {
   return conversations.find(
     chat => chat.id === activeChatId
   );
 }
-
-// =====================================
-// SAVE CHATS
-// =====================================
 
 function saveConversations() {
   localStorage.setItem(
@@ -76,10 +64,6 @@ function saveConversations() {
   );
 }
 
-// =====================================
-// WELCOME SCREEN
-// =====================================
-
 function updateWelcomeScreen() {
   const chat = getActiveConversation();
   const empty = !chat || chat.messages.length === 0;
@@ -87,10 +71,6 @@ function updateWelcomeScreen() {
   welcomeScreen.hidden = !empty;
   messagesEl.hidden = empty;
 }
-
-// =====================================
-// CREATE NEW CHAT
-// =====================================
 
 function createNewChat() {
   if (isStreaming) return;
@@ -115,9 +95,6 @@ function createNewChat() {
   closeSidebar();
   inputEl.focus();
 }
-// =====================================
-// RENDER MARKDOWN
-// =====================================
 
 function renderMarkdown(element, content) {
   const html = window.marked
@@ -128,10 +105,6 @@ function renderMarkdown(element, content) {
     ? DOMPurify.sanitize(html)
     : html;
 }
-
-// =====================================
-// APPEND MESSAGE
-// =====================================
 
 function appendMessage(role, content) {
   const element = document.createElement("div");
@@ -151,10 +124,6 @@ function appendMessage(role, content) {
   return element;
 }
 
-// =====================================
-// COPY TEXT
-// =====================================
-
 async function copyText(text, button) {
   try {
     await navigator.clipboard.writeText(text);
@@ -171,10 +140,6 @@ async function copyText(text, button) {
     button.textContent = "Copy failed";
   }
 }
-
-// =====================================
-// COPY CODE BUTTONS
-// =====================================
 
 function addCodeCopyButtons(messageEl) {
   messageEl.querySelectorAll("pre").forEach(pre => {
@@ -197,10 +162,6 @@ function addCodeCopyButtons(messageEl) {
     pre.insertBefore(button, pre.firstChild);
   });
 }
-
-// =====================================
-// RESPONSE ACTIONS
-// =====================================
 
 function addResponseActions(messageEl, content) {
   messageEl.querySelector(".message-actions")?.remove();
@@ -232,10 +193,6 @@ function addResponseActions(messageEl, content) {
   messageEl.appendChild(actions);
 }
 
-// =====================================
-// DISPLAY MESSAGES
-// =====================================
-
 function renderMessages() {
   messagesEl.innerHTML = "";
 
@@ -260,10 +217,6 @@ function renderMessages() {
   messagesEl.scrollTop = messagesEl.scrollHeight;
 }
 
-// =====================================
-// CHAT HISTORY
-// =====================================
-
 function renderChatHistory() {
   chatHistoryList.innerHTML = "";
 
@@ -284,7 +237,7 @@ function renderChatHistory() {
     const actions = document.createElement("div");
     actions.className = "chat-actions";
 
-    // Rename
+  
 
     const renameButton = document.createElement("button");
 
@@ -308,7 +261,7 @@ function renderChatHistory() {
       }
     });
 
-    // Delete
+    
 
     const deleteButton = document.createElement("button");
 
@@ -342,7 +295,7 @@ function renderChatHistory() {
 
     item.append(title, actions);
 
-    // Switch chat
+   
 
     item.addEventListener("click", () => {
       if (isStreaming) return;
@@ -357,10 +310,6 @@ function renderChatHistory() {
     chatHistoryList.appendChild(item);
   });
 }
-
-// =====================================
-// STREAMING STATE
-// =====================================
 
 function setStreamingState(streaming) {
   isStreaming = streaming;
@@ -377,10 +326,6 @@ function setStreamingState(streaming) {
 
   renderChatHistory();
 }
-
-// =====================================
-// TYPING INDICATOR
-// =====================================
 
 function showTypingIndicator() {
   const indicator = document.createElement("div");
@@ -400,10 +345,6 @@ function showTypingIndicator() {
 
   return indicator;
 }
-
-// =====================================
-// REQUEST AI RESPONSE
-// =====================================
 
 async function requestAssistantReply(chat, assistantElement) {
   const model = modelSelect.value || DEFAULT_MODEL;
@@ -524,14 +465,8 @@ async function requestAssistantReply(chat, assistantElement) {
   }
 }
 
-// =====================================
-// SEND MESSAGE
-// =====================================
-
 async function sendMessage(event) {
   event.preventDefault();
-
-  // Stop generation
 
   if (isStreaming) {
     abortController?.abort();
@@ -574,10 +509,6 @@ async function sendMessage(event) {
   await requestAssistantReply(chat, assistantElement);
 }
 
-// =====================================
-// REGENERATE RESPONSE
-// =====================================
-
 async function regenerateResponse() {
   if (isStreaming) return;
 
@@ -591,7 +522,6 @@ async function regenerateResponse() {
 
   if (lastAssistantIndex === -1) return;
 
-  // Remove the previous assistant response.
 
   chat.messages = chat.messages.slice(
     0,
@@ -608,10 +538,6 @@ async function regenerateResponse() {
 
   await requestAssistantReply(chat, assistantElement);
 }
-
-// =====================================
-// CLEAR CHAT
-// =====================================
 
 function clearChat() {
   if (isStreaming) return;
@@ -630,10 +556,6 @@ function clearChat() {
   renderMessages();
   renderChatHistory();
 }
-
-// =====================================
-// EXPORT CHAT
-// =====================================
 
 function exportChat() {
   const chat = getActiveConversation();
@@ -673,10 +595,6 @@ function exportChat() {
   URL.revokeObjectURL(url);
 }
 
-// =====================================
-// MOBILE SIDEBAR
-// =====================================
-
 function openSidebar() {
   sidebar.classList.add("sidebar-open");
   sidebarOverlay.classList.add("overlay-visible");
@@ -701,10 +619,6 @@ sidebarToggle.addEventListener("click", () => {
 
 sidebarOverlay.addEventListener("click", closeSidebar);
 
-// =====================================
-// SUGGESTED PROMPTS
-// =====================================
-
 suggestionButtons.forEach(button => {
   button.addEventListener("click", () => {
     if (isStreaming) return;
@@ -715,9 +629,6 @@ suggestionButtons.forEach(button => {
   });
 });
 
-// =====================================
-// AUTO GROW TEXTAREA
-// =====================================
 
 inputEl.addEventListener("input", () => {
   inputEl.style.height = "auto";
@@ -725,11 +636,6 @@ inputEl.addEventListener("input", () => {
   inputEl.style.height =
     Math.min(inputEl.scrollHeight, 150) + "px";
 });
-
-// =====================================
-// ENTER TO SEND
-// SHIFT + ENTER FOR NEW LINE
-// =====================================
 
 inputEl.addEventListener("keydown", event => {
   if (event.key === "Enter" && !event.shiftKey) {
@@ -739,10 +645,6 @@ inputEl.addEventListener("keydown", event => {
   }
 });
 
-// =====================================
-// EVENT LISTENERS
-// =====================================
-
 newChatBtn.addEventListener("click", createNewChat);
 
 formEl.addEventListener("submit", sendMessage);
@@ -750,10 +652,6 @@ formEl.addEventListener("submit", sendMessage);
 clearBtn.addEventListener("click", clearChat);
 
 exportChatBtn.addEventListener("click", exportChat);
-
-// =====================================
-// INITIALIZE
-// =====================================
 
 function initializeChatbot() {
   if (!activeChatId) {

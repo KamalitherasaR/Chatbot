@@ -1,4 +1,3 @@
-
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
@@ -9,8 +8,6 @@ const PORT = process.env.PORT || 3000;
 
 const isCloud = Boolean(process.env.OLLAMA_API_KEY);
 
-// Connect to Ollama Cloud on Vercel,
-// or local Ollama when running on your computer.
 const ollama = new Ollama({
   host: isCloud
     ? "https://ollama.com"
@@ -26,10 +23,10 @@ const ollama = new Ollama({
 app.use(cors());
 app.use(express.json());
 
-// Serve frontend files
+
 app.use(express.static(path.join(__dirname, "public")));
 
-// Chat API
+
 app.post("/api/chat", async (req, res) => {
   try {
     const { messages, model } = req.body || {};
@@ -42,7 +39,7 @@ app.post("/api/chat", async (req, res) => {
 
     const selectedModel =
       model ||
-      (isCloud ? "gpt-oss:20b-cloud" : "qwen2.5:1.5b");
+      (isCloud ? "gpt-oss:20b" : "qwen2.5:1.5b");
 
     const response = await ollama.chat({
       model: selectedModel,

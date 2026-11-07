@@ -33,7 +33,7 @@ button:disabled {
   cursor: not-allowed;
 }
 
-/* APP */
+
 
 .app {
   width: 100%;
@@ -45,7 +45,7 @@ button:disabled {
   overflow: hidden;
 }
 
-/* HEADER */
+
 
 .app-header {
   grid-column: 1 / -1;
@@ -80,7 +80,7 @@ button:disabled {
   font-size: 13px;
 }
 
-/* SIDEBAR */
+
 
 .sidebar {
   grid-column: 1;
@@ -168,7 +168,7 @@ button:disabled {
   background: #4b5563;
 }
 
-/* CHAT */
+
 
 .chat-container {
   grid-column: 2;
@@ -181,7 +181,7 @@ button:disabled {
   background: #1f2937;
 }
 
-/* WELCOME */
+
 
 .welcome-screen {
   flex: 1;
@@ -218,7 +218,7 @@ button:disabled {
   line-height: 1.7;
 }
 
-/* SUGGESTIONS */
+
 
 .suggestion-prompts {
   width: 100%;
@@ -241,7 +241,7 @@ button:disabled {
   border-color: #818cf8;
 }
 
-/* MESSAGES */
+
 
 .messages {
   width: 100%;
@@ -307,7 +307,7 @@ button:disabled {
   color: #a5b4fc;
 }
 
-/* CODE */
+
 
 .message.assistant pre {
   position: relative;
@@ -345,7 +345,7 @@ button:disabled {
   font-size: 12px;
 }
 
-/* RESPONSE ACTIONS */
+
 
 .message-actions {
   display: flex;
@@ -369,7 +369,7 @@ button:disabled {
   border-color: #818cf8;
 }
 
-/* TYPING */
+
 
 .typing-indicator {
   align-self: flex-start;
@@ -414,7 +414,7 @@ button:disabled {
   }
 }
 
-/* INPUT */
+
 
 .chat-input-area {
   flex-shrink: 0;
@@ -472,7 +472,7 @@ button:disabled {
   font-weight: bold;
 }
 
-/* CONTROLS */
+
 
 .controls-row {
   display: flex;
@@ -525,7 +525,7 @@ button:disabled {
   font-size: 11px;
 }
 
-/* MOBILE */
+
 
 .sidebar-toggle {
   display: none;
