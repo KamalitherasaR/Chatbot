@@ -1,15 +1,26 @@
+
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
-
 const { Ollama } = require("ollama");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Connect to local Ollama
+const isCloud = Boolean(process.env.OLLAMA_API_KEY);
+
+// Connect to Ollama Cloud on Vercel,
+// or local Ollama when running on your computer.
 const ollama = new Ollama({
-  host: "http://localhost:11434",
+  host: isCloud
+    ? "https://ollama.com"
+    : "http://localhost:11434",
+
+  headers: isCloud
+    ? {
+        Authorization: `Bearer ${process.env.OLLAMA_API_KEY}`,
+      }
+    : {},
 });
 
 app.use(cors());
@@ -25,17 +36,23 @@ app.post("/api/chat", async (req, res) => {
 
     if (!Array.isArray(messages) || messages.length === 0) {
       return res.status(400).json({
-        error: "Messages must be a non-empty array",
+        error: "Messages must be a non-empty array.",
       });
     }
 
+    const selectedModel =
+      model ||
+      (isCloud ? "gpt-oss:20b-cloud" : "qwen2.5:1.5b");
+
     const response = await ollama.chat({
-      model: model || "qwen2.5:1.5b",
+      model: selectedModel,
       messages,
       stream: true,
     });
 
     res.setHeader("Content-Type", "text/plain; charset=utf-8");
+    res.setHeader("Cache-Control", "no-cache");
+    res.setHeader("X-Content-Type-Options", "nosniff");
 
     for await (const part of response) {
       const text = part?.message?.content || "";
@@ -46,12 +63,13 @@ app.post("/api/chat", async (req, res) => {
     }
 
     res.end();
+
   } catch (err) {
     console.error("Chat error:", err);
 
     if (!res.headersSent) {
       res.status(500).json({
-        error: "Something went wrong with the local Ollama server.",
+        error: "Unable to generate a response. Please check your Ollama connection and model configuration.",
       });
     } else {
       res.end();
@@ -60,5 +78,5 @@ app.post("/api/chat", async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Chatbot running at http://localhost:${PORT}`);
+  console.log(`Chatbot running on port ${PORT}`);
 });

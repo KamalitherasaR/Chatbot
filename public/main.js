@@ -17,7 +17,7 @@ const sidebarOverlay = document.getElementById("sidebar-overlay");
 const sidebar = document.querySelector(".sidebar");
 
 const STORAGE_KEY = "qwenConversations";
-const DEFAULT_MODEL = "qwen2.5:1.5b";
+const DEFAULT_MODEL = "gpt-oss:20b-cloud";
 
 let conversations = loadConversations();
 let activeChatId = conversations[0]?.id || null;

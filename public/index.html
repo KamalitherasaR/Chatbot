@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Qwen AI Chatbot</title>
+  <title>AI Chatbot</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -11,17 +12,21 @@
   <div class="app">
 
     <header class="app-header">
-      <button id="sidebar-toggle" class="sidebar-toggle"
-        type="button" aria-label="Open chat history">
+      <button
+        id="sidebar-toggle"
+        class="sidebar-toggle"
+        type="button"
+        aria-label="Open chat history"
+      >
         ☰
       </button>
 
       <div class="app-title">
         <span class="logo-dot"></span>
-        <h1>Qwen Chat</h1>
+        <h1>AI Chat</h1>
       </div>
 
-      <span id="model-label">Model: qwen2.5:1.5b</span>
+      <span id="model-label">Model: gpt-oss:20b-cloud</span>
     </header>
 
     <aside class="sidebar">
@@ -44,30 +49,44 @@
           <h2>Hello! How can I help you today?</h2>
 
           <p>
-            I'm your AI assistant powered by Qwen.
+            I'm your AI assistant powered by Ollama Cloud.
             Ask questions, explore ideas, or get help with coding.
           </p>
 
           <div class="suggestion-prompts">
-            <button class="suggestion-btn" type="button"
-              data-prompt="Explain a programming concept in simple words.">
+
+            <button
+              class="suggestion-btn"
+              type="button"
+              data-prompt="Explain a programming concept in simple words."
+            >
               💡 Explain a concept
             </button>
 
-            <button class="suggestion-btn" type="button"
-              data-prompt="Help me write a professional email.">
+            <button
+              class="suggestion-btn"
+              type="button"
+              data-prompt="Help me write a professional email."
+            >
               ✍️ Write an email
             </button>
 
-            <button class="suggestion-btn" type="button"
-              data-prompt="Give me some creative project ideas.">
+            <button
+              class="suggestion-btn"
+              type="button"
+              data-prompt="Give me some creative project ideas."
+            >
               🚀 Generate ideas
             </button>
 
-            <button class="suggestion-btn" type="button"
-              data-prompt="Help me debug my JavaScript code.">
+            <button
+              class="suggestion-btn"
+              type="button"
+              data-prompt="Help me debug my JavaScript code."
+            >
               💻 Help with coding
             </button>
+
           </div>
         </div>
       </section>
@@ -75,6 +94,7 @@
       <section id="messages" class="messages"></section>
 
       <form id="chat-form" class="chat-input-area">
+
         <div class="input-row">
           <textarea
             id="user-input"
@@ -83,34 +103,52 @@
             placeholder="Ask anything..."
           ></textarea>
 
-          <button id="send-btn" class="send-button" type="submit">
+          <button
+            id="send-btn"
+            class="send-button"
+            type="submit"
+          >
             <span id="send-btn-label">Send</span>
           </button>
         </div>
 
         <div class="controls-row">
+
           <label class="model-select-label">
             Model
 
             <select id="model-select" class="model-select">
-              <option value="qwen2.5:1.5b">
-                Qwen 2.5 (1.5B)
+              <option value="gpt-oss:20b-cloud">
+                GPT OSS (20B Cloud)
               </option>
             </select>
           </label>
 
           <div class="control-buttons">
-            <button id="clear-btn" class="secondary-button" type="button">
+
+            <button
+              id="clear-btn"
+              class="secondary-button"
+              type="button"
+            >
               Clear Chat
             </button>
 
-            <button id="export-chat-btn" class="secondary-button" type="button">
+            <button
+              id="export-chat-btn"
+              class="secondary-button"
+              type="button"
+            >
               ⬇ Export Chat
             </button>
+
           </div>
         </div>
 
-        <p class="input-note">Enter to send · Shift + Enter for a new line</p>
+        <p class="input-note">
+          Enter to send · Shift + Enter for a new line
+        </p>
+
       </form>
 
     </main>
